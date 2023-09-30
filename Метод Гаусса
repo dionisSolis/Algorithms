@@ -1,0 +1,92 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream> 
+using namespace std;
+
+void ShowMatr(float** matr) {
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 10; j++) {
+            cout << setw(10) << matr[i][j] << " ";
+        }
+
+        cout << endl;
+    }
+}
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+
+//подготовка матрицы
+    ifstream F("1.txt");
+
+    float** matr{ new float*[5] };
+    for (int i = 0;i < 5; i++) matr[i] = new float[10] {};
+    
+    cout << "Матрица\n";
+
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            F >> matr[i][j];
+            cout << setw(10) << matr[i][j] << " ";
+        }
+
+        cout << endl;
+    }
+
+    F.close();
+
+    for (int i = 0; i < 5; i++) {
+        for (int j = 5; j < 10; j++) {
+            if (i == j - 5) matr[i][j] = 1;
+            else matr[i][j] = 0;
+        }
+    }
+
+//1 шаг
+    for (int i = 0; i < 5; i++) {
+        float digit = matr[i][i];
+
+        for (int j = i; j < 10; j++) {
+            matr[i][j] /= digit;
+        }
+
+        for (int j = i + 1; j < 5; j++) {
+            digit = matr[j][i];
+
+            for (int z = i; z < 10; z++) {
+                matr[j][z] -= matr[i][z] * digit;
+            }
+        }
+    }
+
+    cout << "\nЗануление под главной диагональю\n";
+    ShowMatr(matr);
+
+//2 шаг
+    for (int i = 4; i > 0; i--) {
+        for (int z = i - 1; z >= 0; z--) {
+            float digit = matr[z][i];
+
+            for (int j = 0; j < 10; j++) {
+                matr[z][j] -= digit * matr[i][j];
+            }
+        }
+    }
+
+    cout << "\nЗануление над главной диагональю\n";
+    ShowMatr(matr);
+
+    cout << "\nОбратная матрица\n";
+
+//Вывод
+    for (int i = 0; i < 5; i++) {
+        for (int j = 5; j < 10; j++) {
+            cout << setw(10) << matr[i][j] << " ";
+        }
+
+        cout << endl;
+    }
+
+    for (int i = 0;i < 5;i++) delete[] matr[i];
+}
