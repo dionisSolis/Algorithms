@@ -1,0 +1,81 @@
+#include <iostream>
+#include <Windows.h>
+#include <math.h>
+#include <stdio.h>
+#include <ctime>
+using namespace std;
+int main()
+{
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	srand(time(0));
+
+	float firstLimit = -5, secondLimit = -3;
+
+	float min = 0;
+	float k = 0;
+	float h = 0.0001;
+	int step = 0;
+
+	cout << "ПАСИВНЫЙ ПОИСК\n\n";
+
+	for (float x = firstLimit; x <= secondLimit; x = x + h) {
+		step++;
+
+		float y = x * x * x - x + exp(-x);
+
+		if (y < min) {
+			min = y;
+			k = x;
+		}
+	} 
+
+	cout << "Минимальное значение функции на [" << firstLimit << ", " << secondLimit << "]\n"
+		<< "Точка минимума ( " << k << ", " << min << ")\n"
+		<< "Количество шагов " << step
+		<< "\nВремя работы программы " << clock()/1000.0 << "\n\n";
+
+	firstLimit = -3, secondLimit = 0;
+
+	srand(time(0));
+	float max = 0;
+	step = 0;
+
+	for (float x = firstLimit; x <= secondLimit; x = x + h) {
+		step++;
+
+		float y = x * x * x - x + exp(-x);
+
+		if (y > max) {
+			max = y;
+			k = x;
+		}
+	}
+
+	cout << "Минимальное значение функции на [" << firstLimit << ", " << secondLimit << "]\n"
+		<< "Точка максимума ( " << k << ", " << max << ")\n"
+		<< "Количество шагов " << step
+		<< "\nВремя работы программы " << clock() / 1000.0 << "\n\n";
+
+	firstLimit = 0, secondLimit = 3;
+
+	srand(time(0));
+	min = 0;
+	step = 0;
+
+	for (float x = firstLimit; x <= secondLimit; x = x + h) {
+		step++;
+
+		float y = x * x * x - x + exp(-x);
+
+		if (y < min) {
+			min = y;
+			k = x;
+		}
+	}
+
+	cout << "Минимальное значение функции на [" << firstLimit << ", " << secondLimit << "]\n"
+		<< "Точка минимума ( " << k << ", " << min << ")\n"
+		<< "Количество шагов " << step
+		<< "\nВремя работы программы " << clock() / 1000.0 << "\n\n";
+}
