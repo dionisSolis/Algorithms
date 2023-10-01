@@ -1,0 +1,162 @@
+#include <iostream>
+#include <Windows.h>
+#include <math.h>
+#include <stdio.h>
+#include <ctime>
+#include <iomanip>
+using namespace std;
+
+void ShowInfo(int step, double firstLimit, double secondLimit, double alpha, double beta, double yAlpha, double yBeta) {
+	cout << step << ") " << firstLimit << " " << secondLimit << " " << alpha << " " << beta << " " << yAlpha << " " << yBeta << " " << secondLimit - firstLimit << endl;
+}
+
+int main()
+{
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	srand(time(0));
+
+	double firstLimit = -5, secondLimit = -3;
+	double firstLimitSave = firstLimit, secondLimitSave = secondLimit;
+
+	double min = 0;
+	double epsilant = 0.001;
+	int step = 0;
+
+	cout << "МЕТОД «ЗОЛОТОГО СЕЧЕНИЯ»\n\n";
+
+	while (true) {
+		double x1, a1, b1;
+
+		double delta = secondLimit - firstLimit;
+
+		double alpha = firstLimit + ( (2*delta) / (3 + sqrt(5)) );
+		double beta = firstLimit + ((2 * delta) / (1 + sqrt(5)));
+		
+		double yAlpha = alpha * alpha * alpha - alpha + exp(-alpha);
+		double yBeta = beta * beta * beta - beta + exp(-beta);
+
+		ShowInfo(step, firstLimit, secondLimit, alpha, beta, yAlpha, yBeta);
+
+		step++;
+
+		if (yAlpha <= yBeta) {
+			x1 = alpha;
+			a1 = firstLimit;
+			b1 = beta;
+		}
+		else {
+			a1 = alpha;
+			x1 = beta;
+			b1 = secondLimit;
+		}
+
+		if (b1 - a1 < epsilant) {
+			min = x1;
+			break;
+		}
+		else {
+			firstLimit = a1;
+			secondLimit = b1;
+		}
+	}
+
+	cout << "\nМинимальное значение функции на [" << firstLimitSave << ", " << secondLimitSave << "]\n"
+		<< "Точка минимума (" << min << ", " << min * min * min - min + exp(-min) << ")\n"
+		<< "Количество шагов " << step
+		<< "\nВремя работы программы " << clock()/1000.0 << "\n\n";
+
+	firstLimit = -3, secondLimit = 0;
+	firstLimitSave = firstLimit, secondLimitSave = secondLimit;
+	step = 0;
+	double max = 0;
+	srand(time(0));
+
+	while (true) {
+		double x1, a1, b1;
+
+		double delta = secondLimit - firstLimit;
+
+		double alpha = firstLimit + ((2 * delta) / (3 + sqrt(5)));
+		double beta = firstLimit + ((2 * delta) / (1 + sqrt(5)));
+
+		double yAlpha = alpha * alpha * alpha - alpha + exp(-alpha);
+		double yBeta = beta * beta * beta - beta + exp(-beta);
+
+		ShowInfo(step, firstLimit, secondLimit, alpha, beta, yAlpha, yBeta);
+
+		step++;
+
+		if (yAlpha >= yBeta) {
+			x1 = alpha;
+			a1 = firstLimit;
+			b1 = beta;
+		}
+		else {
+			a1 = alpha;
+			x1 = beta;
+			b1 = secondLimit;
+		}
+
+		if (b1 - a1 < epsilant) {
+			max = x1;
+			break;
+		}
+		else {
+			firstLimit = a1;
+			secondLimit = b1;
+		}
+	}
+
+	cout << "\nМаксимальное значение функции на [" << firstLimitSave << ", " << secondLimitSave << "]\n"
+		<< "Точка максимума (" << max << ", " << max * max * max - max + exp(-max) << ")\n"
+		<< "Количество шагов " << step
+		<< "\nВремя работы программы " << clock() / 1000.0 << "\n\n";
+
+	firstLimit = 0, secondLimit = 3;
+	firstLimitSave = firstLimit, secondLimitSave = secondLimit;
+	step = 0;
+	min = 0;
+	srand(time(0));
+
+	while (true) {
+		double x1, a1, b1;
+
+		double delta = secondLimit - firstLimit;
+
+		double alpha = firstLimit + ((2 * delta) / (3 + sqrt(5)));
+		double beta = firstLimit + ((2 * delta) / (1 + sqrt(5)));
+
+		double yAlpha = alpha * alpha * alpha - alpha + exp(-alpha);
+		double yBeta = beta * beta * beta - beta + exp(-beta);
+
+		ShowInfo(step, firstLimit, secondLimit, alpha, beta, yAlpha, yBeta);
+
+		step++;
+
+		if (yAlpha <= yBeta) {
+			x1 = alpha;
+			a1 = firstLimit;
+			b1 = beta;
+		}
+		else {
+			a1 = alpha;
+			x1 = beta;
+			b1 = secondLimit;
+		}
+
+		if (b1 - a1 < epsilant) {
+			min = x1;
+			break;
+		}
+		else {
+			firstLimit = a1;
+			secondLimit = b1;
+		}
+	}
+
+	cout << "\nМинимальное значение функции на [" << firstLimitSave << ", " << secondLimitSave << "]\n"
+		<< "Точка минимума (" << min << ", " << min * min * min - min + exp(-min) << ")\n"
+		<< "Количество шагов " << step
+		<< "\nВремя работы программы " << clock() / 1000.0 << "\n\n";
+}
