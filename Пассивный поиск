@@ -4,20 +4,13 @@
 #include <stdio.h>
 #include <ctime>
 using namespace std;
-int main()
-{
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
+
+void FindMinValue(float firstLimit, float secondLimit) {
 	srand(time(0));
-
-	float firstLimit = -5, secondLimit = -3;
-
-	float min = 0;
+	float min = 10;
 	float k = 0;
 	float h = 0.0001;
 	int step = 0;
-
-	cout << "ПАСИВНЫЙ ПОИСК\n\n";
 
 	for (float x = firstLimit; x <= secondLimit; x = x + h) {
 		step++;
@@ -28,18 +21,20 @@ int main()
 			min = y;
 			k = x;
 		}
-	} 
+	}
 
 	cout << "Минимальное значение функции на [" << firstLimit << ", " << secondLimit << "]\n"
 		<< "Точка минимума ( " << k << ", " << min << ")\n"
 		<< "Количество шагов " << step
-		<< "\nВремя работы программы " << clock()/1000.0 << "\n\n";
+		<< "\nВремя работы программы " << clock() / 1000.0 << "\n\n";
+}
 
-	firstLimit = -3, secondLimit = 0;
-
+void FindMaxValue(float firstLimit, float secondLimit) {
 	srand(time(0));
 	float max = 0;
-	step = 0;
+	float k = 0;
+	float h = 0.0001;
+	int step = 0;
 
 	for (float x = firstLimit; x <= secondLimit; x = x + h) {
 		step++;
@@ -56,26 +51,15 @@ int main()
 		<< "Точка максимума ( " << k << ", " << max << ")\n"
 		<< "Количество шагов " << step
 		<< "\nВремя работы программы " << clock() / 1000.0 << "\n\n";
+}
 
-	firstLimit = 0, secondLimit = 3;
+int main()
+{
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 
-	srand(time(0));
-	min = 0;
-	step = 0;
-
-	for (float x = firstLimit; x <= secondLimit; x = x + h) {
-		step++;
-
-		float y = x * x * x - x + exp(-x);
-
-		if (y < min) {
-			min = y;
-			k = x;
-		}
-	}
-
-	cout << "Минимальное значение функции на [" << firstLimit << ", " << secondLimit << "]\n"
-		<< "Точка минимума ( " << k << ", " << min << ")\n"
-		<< "Количество шагов " << step
-		<< "\nВремя работы программы " << clock() / 1000.0 << "\n\n";
+	cout << "ПАСИВНЫЙ ПОИСК\n\n";
+	FindMinValue(-5, -3);
+	FindMaxValue(-3, 0);
+	FindMinValue(0, 3);
 }
