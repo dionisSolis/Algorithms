@@ -42,6 +42,8 @@ void FindMinValue(double firstLimit, double secondLimit) {
 			b1 = secondLimit;
 		}
 
+		ShowInfo(step, x1, x1 * x1 * x1 - x1 + exp(-x1));
+
 		if (b1 - a1 < epsilant) {
 			min = (a1 + b1) / 2;
 			break;
@@ -50,8 +52,6 @@ void FindMinValue(double firstLimit, double secondLimit) {
 			firstLimit = a1;
 			secondLimit = b1;
 		}
-
-		ShowInfo(step, x1, x1 * x1 * x1 - x1 + exp(-x1));
 	}
 
 	cout << "\nМинимальное значение функции на [" << firstLimitSave << ", " << secondLimitSave << "]\n"
@@ -91,6 +91,8 @@ void FindMaxValue(double firstLimit, double secondLimit) {
 			b1 = secondLimit;
 		}
 
+		ShowInfo(step, x1, x1 * x1 * x1 - x1 + exp(-x1));
+
 		if (b1 - a1 < epsilant) {
 			max = (a1 + b1) / 2;
 			break;
@@ -99,8 +101,6 @@ void FindMaxValue(double firstLimit, double secondLimit) {
 			firstLimit = a1;
 			secondLimit = b1;
 		}
-
-		ShowInfo(step, x1, x1 * x1 * x1 - x1 + exp(-x1));
 	}
 
 	cout << "\nМаксимальное значение функции на [" << firstLimitSave << ", " << secondLimitSave << "]\n"
