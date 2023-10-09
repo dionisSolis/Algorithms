@@ -15,7 +15,7 @@ void FindMinValue(double firstLimit, double secondLimit) {
 	double firstLimitSave = firstLimit, secondLimitSave = secondLimit;
 
 	double min = 0;
-	double epsilant = 0.001;
+	double epsilant = 0.000001;
 	int step = 0;
 
 	while (true) {
