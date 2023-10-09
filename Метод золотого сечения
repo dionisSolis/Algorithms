@@ -65,7 +65,7 @@ void FindMaxValue(double firstLimit, double secondLimit) {
 	double firstLimitSave = firstLimit, secondLimitSave = secondLimit;
 
 	double max = 0;
-	double epsilant = 0.001;
+	double epsilant = 0.000001;
 	int step = 0;
 
 	while (true) {
