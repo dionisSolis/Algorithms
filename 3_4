@@ -25,7 +25,7 @@ int oneFiveThree(int n) {
     step += 1;
 
     if (n == 153) {
-        cout << n << "\nКоличество шагов: " << step;
+        cout << n << "\nКоличество шагов: " << step << "\nВремя: " << clock() / 1000.0;
         return n;
     }
     else {
@@ -54,14 +54,17 @@ int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
+    srand(time(0));
     step = 0;
     oneFiveThree(21);
     cout << "\n\n";
 
+    srand(time(0));
     step = 0;
     oneFiveThree(504);
     cout << "\n\n";
 
+    srand(time(0));
     step = 0;
     oneFiveThree(6003);
     cout << "\n\n";
