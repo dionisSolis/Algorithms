@@ -1,0 +1,70 @@
+#include <iostream>
+#include <Windows.h>
+#include <math.h>
+#include <stdio.h>
+#include <ctime>
+#include <iomanip>
+using namespace std;
+
+int step;
+
+int EvklidRecursion(int a, int b) {
+    if (a == 0 || b == 0) {
+        return a + b;
+    }
+    else {
+        step += 1;
+        
+        if (a > b) {
+            EvklidRecursion(a % b, b);
+        }
+        else {
+            EvklidRecursion(a, b % a);
+        }
+    }
+}
+
+int EvklidIteration(int a, int b) {
+    while (a != 0 && b != 0) {
+        step += 1;
+
+        if (a > b) {
+            a = a % b;
+        }
+        else {
+            b = b % a;
+        }
+    }
+
+    return a + b;
+}
+
+int main() {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
+    int result;
+
+    srand(time(0));
+    step = 0;
+    cout << "Числа: 567 и 945";
+    result = EvklidRecursion(945, 567);
+    cout << "\n\nРЕКУРСИВНЫЙ АЛГОРИТМ\nОтвет: " << result << "\nВремя: " << clock() / 1000.0 << "\nКоличество шагов: " << step;
+
+    srand(time(0));
+    step = 0;
+    result = EvklidIteration(567, 945);
+    cout << "\n\nИТЕРРАЦИОННЫЙ АЛГОРИТМ\nОтвет: " << result << "\nВремя: " << clock() / 1000.0 << "\nКоличество шагов: " << step;
+
+    srand(time(0));
+    step = 0;
+    cout << "\n\nЧисла: 6480 и 7749";
+    result = EvklidRecursion(6480, 7749);
+    cout << "\n\nРЕКУРСИВНЫЙ АЛГОРИТМ\nОтвет: " << result << "\nВремя: " << clock() / 1000.0 << "\nКоличество шагов: " << step;
+
+    srand(time(0));
+    step = 0;
+    result = EvklidIteration(6480, 7749);
+    cout << "\n\nИТЕРРАЦИОННЫЙ АЛГОРИТМ\nОтвет: " << result << "\nВремя: " << clock() / 1000.0 << "\nКоличество шагов: " << step;
+    return 0;
+}
