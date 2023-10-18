@@ -10,13 +10,13 @@ using namespace std;
 int step;
 
 int GoAlgorithm(int a, int b) {
-    step += 1;
-
     if (b == a) {
         cout << "Количество шагов: " << step << "\nВремя " << clock() / 1000.0;
         return 0;
     }
     else {
+        step += 1;
+
         if (a % 2 == 0) {
             a /= 2;
         }
