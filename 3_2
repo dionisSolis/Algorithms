@@ -18,15 +18,25 @@ __int64 factoriaRecursion(int n) {
     }
 }
 
-__int64 factorialIteration(int n) {
-    __int64 factorial = 1;
+__int64 factorialIteration(int n, int m) {
+    __int64 result = 1;
+
+    for (int i = 1; i <= m; i++) {
+        step += 1;
+        result *= i;
+    }
 
     for (int i = 1; i <= n; i++) {
         step += 1;
-        factorial *= i;
+        result /= i;
     }
 
-    return factorial;
+    for (int i = 1; i <= m - n; i++) {
+        step += 1;
+        result /= i;
+    }
+
+    return result;
 }
 
 int main() {
@@ -36,14 +46,13 @@ int main() {
     __int64 result;
 
     srand(time(0));
-    step = 0;
+    step = 2;
     cout << " 7\nС\n 13";
     result = factoriaRecursion(13) / (factoriaRecursion(7) * factoriaRecursion(6));
     cout << "\n\nРЕКУРСИВНЫЙ АЛГОРИТМ\nОтвет: " << result << "\nВремя: " << clock() / 1000.0 << "\nКоличество шагов: " << step;
 
     srand(time(0));
-    step = 0;
-    result = factorialIteration(13) / (factorialIteration(7) * factorialIteration(6));
-    cout << "\n\nИТЕРРАЦИОННЫЙ АЛГОРИТМ\nОтвет: " << result << "\nВремя: " << clock() / 1000.0 << "\nКоличество шагов: " << step;
+    step = 2;
+    cout << "\n\nИТЕРРАЦИОННЫЙ АЛГОРИТМ\nОтвет: " << factorialIteration(7, 13) << "\nВремя: " << clock() / 1000.0 << "\nКоличество шагов: " << step;
     return 0;
 }
