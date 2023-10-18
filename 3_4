@@ -1,0 +1,69 @@
+#include <iostream>
+#include <Windows.h>
+#include <math.h>
+#include <stdio.h>
+#include <ctime>
+#include <iomanip>
+#include <list>
+using namespace std;
+
+int step;
+
+list<int> TakeDigit(int n) {
+    list<int> digits;
+
+    while (n > 0) {
+        digits.push_back(n % 10);
+        n = n / 10;
+    }
+
+    digits.push_back(-1);
+    return digits;
+}
+
+int oneFiveThree(int n) {
+    step += 1;
+
+    if (n == 153) {
+        cout << n << "\nКоличество шагов: " << step;
+        return n;
+    }
+    else {
+        list<int> digits = TakeDigit(n);
+        int result = 0;
+
+        cout << n << "=>";
+
+        for (int digit: digits) {
+            if (digit != -1 && digit != 0)
+            {
+                cout << digit*digit*digit;
+                result += digit * digit * digit;
+                cout << "+";
+            }
+            else if (digit == 1)
+                cout << "=";
+        }
+
+        cout << result << "=>";
+        oneFiveThree(result);
+    }
+}
+
+int main() {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
+    step = 0;
+    oneFiveThree(21);
+    cout << "\n\n";
+
+    step = 0;
+    oneFiveThree(504);
+    cout << "\n\n";
+
+    step = 0;
+    oneFiveThree(6003);
+    cout << "\n\n";
+    return 0;
+}
