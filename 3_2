@@ -8,13 +8,12 @@ using namespace std;
 
 int step;
 
-__int64 factoriaRecursion(int n) {
-    if (n == 0) {
-        return 1;
-    }
+int CRecursion(int n, int m) {
+    if (m == 1) return n;
+    else if (m == n) return 1;
     else {
-        step += 1;
-        return n * factoriaRecursion(n - 1);
+        step++;
+        return CRecursion(n - 1, m - 1) + CRecursion(n - 1, m);
     }
 }
 
@@ -43,12 +42,12 @@ int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
-    __int64 result;
+    int result;
 
     srand(time(0));
     step = 2;
     cout << " 7\nС\n 13";
-    result = factoriaRecursion(13) / (factoriaRecursion(7) * factoriaRecursion(6));
+    result = CRecursion(13, 7);
     cout << "\n\nРЕКУРСИВНЫЙ АЛГОРИТМ\nОтвет: " << result << "\nВремя: " << clock() / 1000.0 << "\nКоличество шагов: " << step;
 
     srand(time(0));
