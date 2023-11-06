@@ -1,0 +1,92 @@
+#include <iostream>
+#include <math.h>
+#include <ctime>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <Windows.h>
+using namespace std;
+
+int step;
+
+//функция для сортировки по возрастанию
+int compare(const void* a, const void* b)
+{
+    return (*(int*)a - *(int*)b);
+}
+
+void FillArray(int array[], int size) {
+    for (int i = 0; i < size; i++) {
+        array[i] = rand() % 12348;
+    }
+}
+
+void PrintArray(int array[], int size) {
+    for (int i = 0; i < size; i++) {
+        std::cout << array[i] << " ";
+    }
+}
+
+void CopyArray(int arrayFirst[], int arraySecond[], int size) {
+    for (int i = 0; i < size; i++) {
+        arrayFirst[i] = arraySecond[i];
+    }
+}
+
+int LinearSearch(int array[], int size, int key) {
+    step = 0;
+
+    for (int i = 0; i < size; i++) {
+        step += 1;
+
+        if (array[i] == key) {
+            return i;
+        }
+    }
+}
+
+int BinarySearch(int array[], int size, int key) {
+    step = 0;
+
+    int index = size / 2;
+    int length = size / 2;
+
+    while (true) {
+        step += 1;
+        length = max(1, length / 2);
+
+        if (array[index] < key) {
+            index += length;
+        }
+        else if (array[index] == key) {
+            return index;
+        }
+        else {
+            index -= length;
+        }
+    }
+}
+
+int main() {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    
+    const int size = 30;
+    int array[size];
+    int index;
+
+    FillArray(array, size);
+    
+    std::cout << "ЛИНЕЙНЫЙ ПОИСК\n";
+    srand(time(0));;
+    PrintArray(array, size);
+    index = LinearSearch(array, 30, 7695);
+    std::cout << "\nВремя: " << clock() / 1000.0 << " Сравнения: " << step << "  array[" << index << "] = " << array[index];
+
+    std::cout << "\n\nБИНАРНЫЙ ПОИСК\n";
+    srand(time(0));;
+    qsort(array, size, sizeof(int), compare);
+    PrintArray(array, size);
+    index = BinarySearch(array, 30, 7695);
+    std::cout << "\nВремя: " << clock() / 1000.0 << " Сравнения: " << step << "  array[" << index << "] = " << array[index] << endl;
+}   
