@@ -1,0 +1,42 @@
+#include <iostream>
+#include <queue>
+#include <Windows.h>
+using namespace std;
+
+
+void FillQueue(queue<int>& C, int size, queue<int>& CNext) {
+
+    if (C.size() > size) {
+        CNext.push(C.front());
+        C.pop();
+    }
+}
+
+int main() {    
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    
+    const int amountOfCommands = 10;
+
+    queue<int> C1;
+    queue<int> C2;
+    queue<int> C3;
+    queue<int> C4;
+    queue<int> C5;
+
+    cout << "Комнады после прохода 5ой ступени" << endl;
+
+    for (int i = 1; i <= amountOfCommands + 15; i++) {
+        C1.push(i);
+
+        FillQueue(C1, 1, C2);
+        FillQueue(C2, 2, C3);
+        FillQueue(C3, 3, C4);
+        FillQueue(C4, 4, C5);
+
+        if (C5.size() > 5) {
+            cout << C5.front() << endl;
+            C5.pop();
+        }
+    }
+}
