@@ -23,8 +23,6 @@ int main() {
     queue<int> C4;
     queue<int> C5;
 
-    cout << "Комнады после прохода 5ой ступени" << endl;
-
     for (int i = 1; i <= amountOfCommands+1; i++) {
         C1.push(i);
         C2.push(i + 1);
