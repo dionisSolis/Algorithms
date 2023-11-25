@@ -11,11 +11,11 @@ void FillQueue(queue<int>& C, int size, queue<int>& CNext) {
     }
 }
 
-int main() {    
+int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
-    
-    const int amountOfCommands = 10;
+
+    const int amountOfCommands = 5;
 
     queue<int> C1;
     queue<int> C2;
@@ -25,17 +25,14 @@ int main() {
 
     cout << "Комнады после прохода 5ой ступени" << endl;
 
-    for (int i = 1; i <= amountOfCommands + 15; i++) {
+    for (int i = 1; i <= amountOfCommands+1; i++) {
         C1.push(i);
+        C2.push(i + 1);
+        C3.push(i + 2);
+        C4.push(i + 3);
+        C5.push(i + 4);
 
-        FillQueue(C1, 1, C2);
-        FillQueue(C2, 2, C3);
-        FillQueue(C3, 3, C4);
-        FillQueue(C4, 4, C5);
-
-        if (C5.size() > 5) {
-            cout << C5.front() << endl;
-            C5.pop();
-        }
+        cout << C1.back() << " " << C2.back() << " " << C3.back() << " " << C4.back() << " " << C5.back() << "\n";
+        cin.get();
     }
 }
