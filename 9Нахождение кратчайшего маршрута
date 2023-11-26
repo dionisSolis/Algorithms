@@ -1,0 +1,50 @@
+#include <iostream>
+#include <Windows.h>
+#include <string>
+
+using namespace std;
+
+bool CheckPoints(int point1, int point2, int point3, int point4) {
+    return point1 != point2 and point1 != point3 and point1 != point4 and point2 != point3 and point2 != point4 and point3 != point4;
+}
+
+int main()
+{
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    
+    int distances[5][5] = {
+        {0, 5, 3, 4, 5},
+        {5, 0, 3, 5, 6},
+        {3, 3, 0, 4, 7},
+        {4, 5, 4, 0, 7},
+        {4, 6, 7, 7, 0},
+    };
+
+    int minLength = INT_MAX;
+    string wayOfMinLength = "";
+
+    for (int mail = 1; mail < 5; mail++) {
+        for (int point1 = 1; point1 < 5; point1++) {
+            for (int point2 = 1; point2 < 5; point2++) {
+                for (int point3 = 1; point3 < 5; point3++) {
+                    if (CheckPoints(mail, point1, point2, point3)) {
+                        int length = distances[0][mail] + distances[mail][point1] + distances[point1][point2] + distances[point2][point3] + distances[point3][0];
+                        string way = "Почтамт - " + to_string(mail) + " - " + to_string(point1) + " - " + to_string(point2) + " - " + to_string(point3) + " - Почтамт: " + to_string(length);
+
+                        cout << way;
+
+                        if (length < minLength) {
+                            minLength = length;
+                            wayOfMinLength = way;
+                        }
+
+                        cout << "\n";
+                    }
+                }
+            }
+        }
+    }
+
+    cout << "\n\nКрачтайший путь\n" << wayOfMinLength;
+}
