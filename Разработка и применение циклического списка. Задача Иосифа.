@@ -1,0 +1,106 @@
+#include <iostream>
+#include <Windows.h>
+
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node* next;
+};
+Node* Init_Circle(int h)
+{
+    Node* head;
+
+    head = new Node;
+    head->data = h;
+    head->next = head;
+
+    return(head);
+}
+Node* Insert_Circle_1(Node* x, int h)
+{
+    Node* new_node, * p;
+
+    p = x->next;
+    new_node = new Node;
+    new_node->data = h;
+    x->next = new_node;
+    new_node->next = p;
+
+    return(x);
+}
+void Print_Circle_1(Node* x)
+{
+    Node* p = x;
+
+    do
+    {
+        cout << p->data << " ";
+        p = p->next;
+    } while (p != x);
+
+    cout << endl;
+}
+Node* Del_Node_Circle_1(Node* x, int N)
+{
+    if (x != NULL)
+    {
+        Node* p = x;
+
+        if (x->next != x)
+        {
+            for (int i = 1; i < N; i++) {
+                p = p->next;
+            }
+
+            Node* ptr = x;
+
+            while (ptr->next != p)
+            {
+                ptr = ptr->next;
+            }
+
+            ptr->next = p->next;
+
+            if (x = p) {
+                p->data;
+                x = p->next;
+            }
+
+            delete(p);
+        }
+        return x;
+    };
+}
+int main() {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
+    int n = 1;
+    Node* u_1 = Init_Circle(1);
+    Node* u;
+
+    for (int i = 20; i > 1; i--) { 
+        u = Insert_Circle_1(u_1, i); 
+    }
+    cout << "Список: ";
+    Print_Circle_1(u);
+
+    for (int m = 2; m < 21; m++) {
+        Node* u_1 = Init_Circle(1);
+        Node* u;
+
+        for (int i = 20; i > 1; i--) { 
+            u = Insert_Circle_1(u_1, i); 
+        }
+
+        while (u->next != u)
+        {
+            u = Del_Node_Circle_1(u, m);
+        }
+
+        cout << endl << "для m = " << m << " значение оставшегося узла -> " << u->data << endl;
+    }
+    return 0;
+}
