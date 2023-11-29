@@ -1,0 +1,181 @@
+#include <iostream>
+#include <string>
+#include <Windows.h>
+#include <math.h>
+#include <stack>
+#include <stdio.h>
+
+using namespace std;
+
+class Node
+{
+public:
+	int num_gr; // key
+	string l_name;
+	Node* pNext;
+
+	Node(int key, string l_n)
+	{
+		num_gr = key;
+		l_name = l_n;
+		pNext = nullptr;
+	}
+};
+
+class group
+{
+public:
+	Node* head;
+
+	group() { head = nullptr; };
+
+	void push(int key, string l_n) {
+		Node* node = new Node(key, l_n);
+		if (head) { node->pNext = head; head = node; }
+		else { head = node; }
+	}
+
+	void print() {
+		Node* p = head;
+		while (p) { cout << p->l_name << endl; p = p->pNext; }
+	}
+};
+
+struct node {
+	int num_gr;
+	int count;
+	string l_name; // key
+	node* Left;
+	node* Right;
+	node(Node a) {
+		num_gr = a.num_gr;
+		count = 0;
+		l_name = a.l_name;
+		Left = nullptr;
+		Right = nullptr;
+	}
+
+};
+
+class TREE1
+{
+private:
+	node* Root; //Указатель на корень дерева.
+	void Search(Node* a, node** p) // Поиск вершины с ключом x в дереве со вставкой(рекурсивный алгоритм)
+		// *p - указатель на корень дерева.
+	{
+		if (!*p)
+		{// Вершины в дереве нет; включить ее.
+			*p = new node(*a);
+			//cout << " New root " << endl;//Надо объявить а
+		}
+		else // проверяем место вставки (слева/справа) и наличие такой же вершины 
+			//cout << a->l_name << "    " << (**p).l_name << endl;
+			if (a->l_name < (**p).l_name)
+			{
+				//cout << " L " << endl;
+				Search(a, &((**p).Left));
+			}//если новое значение меньше – левое поддерево
+			else
+				if (a->l_name > (**p).l_name) {
+					//cout << " R " << endl;
+					Search(a, &((**p).Right));
+				} //если значение больше – правое поддерево
+				else (**p).count = (**p).count + 1; //если вершина уже есть
+	}
+public:
+	TREE1() { Root = NULL; }
+	node* GetTree() { return Root; } //Получениевершиныдерева.
+	void BuildTree(group a) //метод построения дерева
+	{
+		Node* p = a.head;
+		while (p) { Search(p, &Root); p = p->pNext; }
+	}
+	void Vyvod(node* w, int l)
+		// Изображение бинарного дерева, заданногоуказателем *w на экране ПК.
+	{
+		if (w != NULL)
+		{
+			Vyvod(((*w).Right), l + 1);
+			for (int i = 1; i <= l; i++) cout << "\t";
+			cout << (*w).l_name << endl;
+			Vyvod(((*w).Left), l + 1);
+		}
+	}
+	Node* c;
+	void Tree(int n, node** p)
+	{
+		node* now = *p;
+		int nl, nr;
+		if (n == 0) *p = NULL;
+		else
+		{
+			nl = n / 2; nr = n - nl - 1;//находим середину
+			now = new node(*c);
+			c = c->pNext;
+			Tree(nl, &((*now).Left));//половина – по левым ветвям поддеревьев
+			Tree(nr, &((*now).Right));//оставшиеся – по правым ветвям поддеревьев
+			*p = now;
+		}
+	}
+	void create_tree_balance(group a) {
+		c = a.head;
+		Tree(5, &Root);
+		c = nullptr;
+	}
+};
+
+group fill_list(group a, int number, string surname[5]) {
+	for (int i = 0; i < 5; i++) {
+		a.push(number, surname[i]);
+	}
+	return a;
+}
+
+int main()
+{
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+
+	group IST211, IST212, IST213, IST214;
+	string surnameIST211[5] = { "Кошка", "Собака", "Попугай", "Петух", "Осел"};
+	string surnameIST212[5] = { "Мышь", "Кот", "Крокодил", "Орел", "Конь" };
+	string surnameIST213[5] = { "Морж", "Крот", "Крыса", "Индюк", "Лев" };
+	string surnameIST214[5] = { "Пингвин", "Нутрия", "Воробей", "Змея", "Заяц" };
+
+	TREE1 t1, t2, t3, t4;
+	TREE1 t11, t22, t33, t44;
+
+	//TREE1 t1, t11;
+	cout << endl << endl << "\t\t" << "Группа ИСТ-211" << endl;
+	cout << "Дерево" << endl << endl;
+	t1.BuildTree(fill_list(IST211, 211, surnameIST211));
+	t1.Vyvod(t1.GetTree(), 0);
+	t11.create_tree_balance(fill_list(IST211, 211, surnameIST211));
+	cout << endl << "Сбалансированное дерево" << endl << endl;
+	t11.Vyvod(t11.GetTree(), 0);
+
+	cout << endl << endl << "\t\t" << "Группа ИСТ-212" << endl;
+	cout << "Дерево" << endl << endl;
+	t2.BuildTree(fill_list(IST212, 212, surnameIST212));
+	t2.Vyvod(t2.GetTree(), 0);
+	t22.create_tree_balance(fill_list(IST212, 212, surnameIST212));
+	cout << endl << "Сбалансированное дерево" << endl << endl;
+	t22.Vyvod(t22.GetTree(), 0);
+
+	cout << endl << endl << "\t\t" << "Группа ИСТ-213" << endl;
+	cout << "Дерево " << endl << endl;
+	t3.BuildTree(fill_list(IST213, 213, surnameIST213));
+	t3.Vyvod(t3.GetTree(), 0);
+	t33.create_tree_balance(fill_list(IST213, 213, surnameIST213));
+	cout << endl << "Сбалансированное дерево" << endl << endl;
+	t33.Vyvod(t33.GetTree(), 0);
+
+	cout << endl << endl << "\t\t" << "Группа ИСТ-214" << endl;
+	cout << "Дерево " << endl << endl;
+	t4.BuildTree(fill_list(IST214, 214, surnameIST214));
+	t4.Vyvod(t4.GetTree(), 0);
+	t44.create_tree_balance(fill_list(IST214, 214, surnameIST214));
+	cout << endl << "Сбалансированное дерево " << endl << endl;
+	t44.Vyvod(t44.GetTree(), 0);
+}
